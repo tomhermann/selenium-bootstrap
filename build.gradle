@@ -1,0 +1,36 @@
+apply plugin: 'groovy'
+apply from:'https://raw.github.com/tomhermann/gradle-scripts/master/sources-javadoc.gradle'
+
+repositories { 
+	mavenRepo urls: 'http://repo.jfrog.org/artifactory/repo'
+}
+
+configurations {
+	all*.exclude group: "commons-logging", module: "commons-logging"
+}
+
+sourceCompatibility = 1.6
+targetCompatibility = sourceCompatibility
+version = '0.0.1.RELEASE'
+slf4jVersion = '1.6.2'
+seleniumVersion = '2.15.0'
+
+dependencies {
+	groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.5'
+	
+	compile (
+		"org.slf4j:slf4j-api:${slf4jVersion}",
+		"org.seleniumhq.selenium:selenium-java:${seleniumVersion}",
+		"org.seleniumhq.selenium:selenium-htmlunit-driver:${seleniumVersion}"
+	)
+
+	runtime (
+		"org.slf4j:jcl-over-slf4j:${slf4jVersion}",
+		"org.slf4j:slf4j-log4j12:${slf4jVersion}",
+		'log4j:log4j:1.2.16'
+	)
+
+	testCompile (
+		'junit:junit:4.10'
+	)
+}
